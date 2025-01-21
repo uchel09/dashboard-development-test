@@ -102,16 +102,15 @@ Sebelum menjalankan proyek ini, pastikan sistem Anda memenuhi persyaratan beriku
 Struktur direktori utama proyek adalah sebagai berikut:
 
 ```
-/src
-  /components        # Komponen antarmuka pengguna
-  /pages             # Halaman aplikasi (Next.js routing)
-	  /(dashboard)   # Grup Halaman sekaligus halaman home(no feature)
-		  /product   # Halaman Utama (Manage daftar produk)
-		  /settings  # Halaman tambahan untuk setting (no feature)
-
-  /services      # Logika bisnis dan komunikasi API
-  /types         # Tipe TypeScript untuk data aplikasi
-
+/components 		# Komponen antarmuka pengguna
+/app 				# Halaman aplikasi (Next.js routing)
+  /(dashboard) 		# Grup Halaman sekaligus halaman home(no feature)
+  /product 			# Halaman Utama (Manage daftar produk)
+  /settings 		# Halaman tambahan untuk setting (no feature)
+/services 			# Logika bisnis dan komunikasi API
+/types 				# Tipe TypeScript untuk data aplikasi/Web
+/hooks 				# untuk membuat custom hooks sesuai kebutuhan
+/lib 				# untuk membuat custom function sesuai kebutuhan
 ```
 
 ## API Endpoint yang Digunakan
