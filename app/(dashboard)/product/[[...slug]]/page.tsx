@@ -1,6 +1,8 @@
 import ProductView from "@/components/Product/ProductView";
 import React from "react";
 
+
+
 const ProductPage = () => {
   return (
     <div >

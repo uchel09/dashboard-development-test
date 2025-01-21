@@ -1,9 +1,12 @@
-import React from 'react'
+import SettingsView from "@/components/Settings/SettingsView";
+import React from "react";
 
 const SettingsPage = () => {
   return (
-    <div>Dalam Tahap Pengembangan</div>
-  )
-}
+    <div>
+      <SettingsView />
+    </div>
+  );
+};
 
-export default SettingsPage
+export default SettingsPage;

@@ -1,33 +1,44 @@
 "use client";
-import React, { useState } from "react";
-import { Button, Drawer, Form, Input, InputNumber, Flex } from "antd";
+import React, { useState, useEffect, Suspense } from "react";
+import { Button, Drawer, Form, Input, InputNumber, Space } from "antd";
+import { useRouter } from "next/navigation";
+import { useSearchParams, usePathname } from "next/navigation";
 import { IProduct } from "@/types/IProduct";
 import { useProducts } from "@/hooks/useProduct";
 import ProductTable from "@/components/custom/Table/ProductTable";
 
 const ProductView = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const {
     products,
     loading,
+    currentPage,
+    setCurrentPage,
+    searchQuery,
+    setSearchQuery,
     handleAddProduct,
     handleUpdateProduct,
     handleDeleteProduct,
+    pageSize,
+    totalProducts,
   } = useProducts();
+
   const [editingProduct, setEditingProduct] = useState<IProduct | null>(null);
   const [drawerVisible, setDrawerVisible] = useState(false);
-  const [searchText, setSearchText] = useState("");
-  const [filteredData, setFilteredData] = useState<IProduct[]>([]);
-
+  const pathname = usePathname();
   const [form] = Form.useForm();
 
+  // Fungsi untuk menangani pencarian dan memperbarui URL
   const handleSearch = (value: string) => {
-    setSearchText(value);
-    const filtered = products.filter((item) =>
-      item.title.toLowerCase().includes(value.toLowerCase())
-    );
-    setFilteredData(filtered);
+    setSearchQuery(value);
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("search", value);
+    router.push(`${pathname}?${params.toString()}`);
   };
 
+  //submit edit dan add
   const handleSubmit = (values: IProduct) => {
     if (editingProduct) {
       handleUpdateProduct(editingProduct.id, values);
@@ -39,25 +50,51 @@ const ProductView = () => {
     setEditingProduct(null);
   };
 
+  // Fungsi handle page
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", String(page));
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  //pantau perubahan search params
+  useEffect(() => {
+    const search = searchParams.get("search");
+    const page = searchParams.get("page");
+    if (search) {
+      setSearchQuery(search);
+    }
+    if (page) {
+      setCurrentPage(Number(page));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
   return (
     <>
-      <Flex gap="middle">
-        {/* Button Add pRODUCT  */}
+      {/* Header Actions */}
+      <Space style={{ marginBottom: 16 }}>
         <Button type="primary" onClick={() => setDrawerVisible(true)}>
           Add Product
         </Button>
         <Input.Search
           placeholder="Search by name"
-          value={searchText}
+          value={searchQuery}
           onChange={(e) => handleSearch(e.target.value)}
-          style={{ marginBottom: 16, width: 300 }}
+          style={{ width: 300 }}
         />
-      </Flex>
+      </Space>
 
-      {/* Tabel Products  */}
+      {/* Products Table */}
       <ProductTable
-        products={searchText ? filteredData : products}
+        pageSize={pageSize}
+        totalProducts={totalProducts}
+        products={products}
         loading={loading}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
         onEdit={(product) => {
           setEditingProduct(product);
           setDrawerVisible(true);
@@ -66,7 +103,7 @@ const ProductView = () => {
         onDelete={handleDeleteProduct}
       />
 
-      {/* drawer form  */}
+      {/* Drawer Form */}
       <Drawer
         title={editingProduct ? "Edit Product" : "Add Product"}
         open={drawerVisible}
@@ -110,4 +147,11 @@ const ProductView = () => {
   );
 };
 
-export default ProductView;
+const SuspenseProductView = () => {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <ProductView />;
+    </Suspense>
+  );
+};
+export default SuspenseProductView;

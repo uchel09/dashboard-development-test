@@ -1,33 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import { Table, Button } from "antd";
 import { IProduct } from "@/types/IProduct";
 import { EditOutlined } from "@ant-design/icons";
 import DeleteModal from "../../modals/DeleteModal";
-import { useSearchParams } from "next/navigation"; // Import untuk mengakses searchParams
 
-interface ProductTableProps {
+interface ProductTable2Props {
   products: IProduct[];
   loading: boolean;
+  currentPage: number;
+  onPageChange: (page: number) => void;
   onEdit: (product: IProduct) => void;
   onDelete: (id: string) => void;
+  pageSize: number;
+  totalProducts: number;
 }
 
-const ProductTable: React.FC<ProductTableProps> = ({
+const ProductTable2: React.FC<ProductTable2Props> = ({
   products,
   loading,
+  currentPage,
+  onPageChange,
   onEdit,
   onDelete,
+  pageSize,
+  totalProducts,
 }) => {
-  const searchParams = useSearchParams();
-  const page = Number(searchParams.get("page")) || 1;
-  const [currentPage, setCurrentPage] = useState<number>(page);
-
-  // fungsi untuk menangani perubahan halaman dan memperbarui searchParams
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    const newParams = new URLSearchParams(searchParams.toString());
-    newParams.set("page", page.toString());
-    window.history.pushState({}, "", "?" + newParams.toString());
+    onPageChange(page);
   };
 
   const columns = [
@@ -77,11 +76,12 @@ const ProductTable: React.FC<ProductTableProps> = ({
       loading={loading}
       pagination={{
         current: currentPage,
-        pageSize: 9,
+        pageSize: pageSize,
         onChange: handlePageChange,
+        total: totalProducts,
       }}
     />
   );
 };
 
-export default ProductTable;
+export default ProductTable2;

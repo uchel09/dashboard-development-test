@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 import { IProduct } from "@/types/IProduct";
 import {
   fetchProducts,
@@ -11,27 +10,24 @@ import toast from "react-hot-toast";
 
 export const useProducts = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const loadProducts = async () => {
+  const pageSize = 9;
+  const totalProducts = 100;
+  const loadProducts = async (page = currentPage, query = searchQuery) => {
     setLoading(true);
     try {
-      const data = await fetchProducts();
-      const sortData = data.sort((a: IProduct, b: IProduct) => {
-        if (a.createdAt && b.createdAt) {
-          console.log("wooy");
-          return (
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          );
-        }
-        return 0;
-      });
-
-      console.log(sortData);
-      setProducts(sortData);
+      const data = await fetchProducts(query, page, pageSize);
+      setProducts(data);
     } catch (error) {
-      toast.error("Failed to get products.");
-      console.log(error);
+      if (query) {
+        toast("data yang anda cari tidak ada");
+      }
+      setProducts([]);
+
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -40,14 +36,22 @@ export const useProducts = () => {
   const handleAddProduct = async (product: IProduct) => {
     setLoading(true);
     try {
-      const response = await addProduct(product);
-      console.log(response);
-      // setProducts((prev) => [response, ...prev]);
+      if (products.length >= 99) {
+        const oldestProduct = products.reduce((oldest, current) =>
+          new Date(current.createdAt || "").getTime() <
+          new Date(oldest.createdAt || "").getTime()
+            ? current
+            : oldest
+        );
+
+        await handleDeleteProduct(oldestProduct.id);
+      }
+      await addProduct(product);
       await loadProducts();
-      toast.success(" Product Added Successfully");
+      toast.success("Product added successfully!");
     } catch (error) {
-      toast.error("Failed to add product");
-      console.log(error);
+      toast.error("Failed to add product.");
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -56,19 +60,12 @@ export const useProducts = () => {
   const handleUpdateProduct = async (id: string, product: IProduct) => {
     setLoading(true);
     try {
-      const response = await updateProduct(id, product);
-      console.log(response);
-      // setProducts((prev) =>
-      //   prev.map((product) =>
-
-      //     product.id === response.id ? { ...product, ...response } : product
-      //   )
-      // );
+      await updateProduct(id, product);
       await loadProducts();
-      toast.success("Product updated successfully.");
+      toast.success("Product updated successfully!");
     } catch (error) {
       toast.error("Failed to update product.");
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -77,14 +74,12 @@ export const useProducts = () => {
   const handleDeleteProduct = async (id: string) => {
     setLoading(true);
     try {
-      const res = await deleteProduct(id);
-      console.log(res);
-      // setProducts((prev) => prev.filter((product) => product.id !== id));
-      await loadProducts();
-      toast.success("Product deleted successfully.");
+      await deleteProduct(id);
+      setProducts((prev) => prev.filter((product) => product.id !== id)); // Optimisasi
+      toast.success("Product deleted successfully!");
     } catch (error) {
       toast.error("Failed to delete product.");
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -92,12 +87,18 @@ export const useProducts = () => {
 
   useEffect(() => {
     loadProducts();
-    console.log("di jaalankan");
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, searchQuery]);
 
   return {
     products,
     loading,
+    currentPage,
+    setCurrentPage,
+    totalProducts,
+    pageSize,
+    searchQuery,
+    setSearchQuery,
     handleAddProduct,
     handleUpdateProduct,
     handleDeleteProduct,
