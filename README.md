@@ -123,13 +123,13 @@ Berikut adalah daftar endpoint yang digunakan dalam aplikasi ini:
 	```json
 	[
 	  {
-		category: "category 5",
-		createdAt: "2025-01-20T05:32:20.404Z",
-		description: "Carbonite web goalkeeper gloves are ergonomically designed to give ",
-		id: "5",
-		image: "https://loremflickr.com/640/480/fashion",
-		price: 400,
-		title: "Carbonite web"
+		"category": "category 5",
+		"createdAt": "2025-01-20T05:32:20.404Z",
+		"description": "Carbonite web goalkeeper gloves are ergonomically designed to give ",
+		"id": "5",
+		"image": "https://loremflickr.com/640/480/fashion",
+		"price": 400,
+		"title": "Carbonite web"
 	  }
 	]
 	```
@@ -137,46 +137,46 @@ Berikut adalah daftar endpoint yang digunakan dalam aplikasi ini:
 	- request body
 	```json
 	  {
-		title: "Carbonite web" (required)
-		category: "category 5",(required)
-		description: "Carbonite web goalkeeper gloves are ergonomically designed ````to give ",
-		image: "https://loremflickr.com/640/480/fashion",
-		price: 400,
+		"title": "Carbonite web", (required)
+		"category": "category 5",(required)
+		"description": "Carbonite web goalkeeper gloves are ergonomically designed ````to give ",
+		"image": "https://loremflickr.com/640/480/fashion",
+		"price": 400,
 	  }
 	  ```
 	  - response
 	  ```json 
 	  {
-		id:"18"
-		title: "Carbonite web" 
-		category: "category 5",
-		description: "Carbonite web goalkeeper gloves are ergonomically designed ````to give ",
-		image: "https://loremflickr.com/640/480/fashion",
-		price: 400,
+		"id":"18",
+		"title": "Carbonite web", 
+		"category": "category 5",
+		"description": "Carbonite web goalkeeper gloves are ergonomically designed ````to give ",
+		"image": "https://loremflickr.com/640/480/fashion",
+		"price": 400,
 	  }
 	  ```
 
 - **PUT /commerce/:id**: Memperbarui data produk berdasarkan ID
  - **/commerece/18**  
-  - request body
+ - request body
  	```json
 	  {
-		title: "Carbonite web" (required)
-		category: "category 5",(required)
-		description: "Carbonite web goalkeeper gloves are ergonomically designed ````to give ",
-		image: "https://loremflickr.com/640/480/fashion",
-		price: 400,
+		"title": "Carbonite web", (required)
+		"category": "category 5",(required)
+		"description": "Carbonite web goalkeeper gloves are ergonomically designed ````to give ",
+		"image": "https://loremflickr.com/640/480/fashion",
+		"price": 400,
 	  }
 	  ```
   -   response
 	  ```json 
 	  {
-		id:"18"
-		title: "Carbonite web" 
-		category: "category 5",
-		description: "Carbonite web goalkeeper gloves are ergonomically designed ````to give ",
-		image: "https://loremflickr.com/640/480/fashion",
-		price: 400,
+		"id":"18",
+		"title": "Carbonite web", 
+		"category": "category 5",
+		"description": "Carbonite web goalkeeper gloves are ergonomically designed ````to give ",
+		"image": "https://loremflickr.com/640/480/fashion",
+		"price": 400,
 	  }
       ```
 -   **DELETE /commerce/:id**: Menghapus produk berdasarkan ID
@@ -184,22 +184,22 @@ Berikut adalah daftar endpoint yang digunakan dalam aplikasi ini:
   - response 
 	  ```json 
 	  {
-		id:"18"
-		title: "Carbonite web" 
-		category: "category 5",
-		description: "Carbonite web goalkeeper gloves are ergonomically designed ````to give ",
-		image: "https://loremflickr.com/640/480/fashion",
-		price: 400,
+		"id":"18",
+		"title": "Carbonite web", 
+		"category": "category 5",
+		"description": "Carbonite web goalkeeper gloves are ergonomically designed ````to give ",
+		"image": "https://loremflickr.com/640/480/fashion",
+		"price": 400,
 	  }
       ```
 
 ## Fitur Utama
 
-1.  **Menampilkan daftar produk** dengan informasi lengkap.
-2.  **Menambahkan produk baru** dengan formulir input.
-3.  **Mengedit produk** yang sudah ada.
-4.  **Menghapus produk**  dari daftar Product.
-5.  **Pagination** untuk 9 data product per Page.
+1.  **Menampilkan daftar produk** dengan informasi lengkap dalam bentuk table.
+2.  **Menambahkan produk baru** dengan formulir drawer form.
+3.  **Mengedit produk** yang sudah ada dengan formulir drawer form melalui action edit di table.
+4.  **Menghapus produk**  dari table daftar Product melalui action delete di table.
+5.  **Pagination** untuk 9 data product per Page dengan maksimal row = 100.
 
 ## Additional Features Implemented
 1.  **Search by  title** Mencari product berdasarkan title.
