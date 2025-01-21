@@ -16,14 +16,14 @@ Sebelum menjalankan proyek ini, pastikan sistem Anda memenuhi persyaratan beriku
 1.  **Clone repository** ke mesin lokal Anda:
     
     ```bash
-    https://github.com/uchel09/dashboard-development-test.git
+    git clone https://github.com/uchel09/dashboard-development-test.git
     
     ```
     
 2.  **Pindah ke direktori proyek**:
     
     ```bash
-    cd nama-repository
+    cd /dashboard-development-test
     
     ```
     
