@@ -1,0 +1,20 @@
+/* Layout  */
+.layout-sider {
+  background-color: white;
+  border-end-end-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
+}
+
+.dashboard-layout {
+  width: 100vw;
+  height: 100vh;
+}
+
+.btn-zoom-aside {
+  font-size: "16px";
+  width: 30;
+  height: 30;
+  margin-bottom: 20px;
+}

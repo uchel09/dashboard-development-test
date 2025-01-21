@@ -1,36 +1,219 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dashboard Development Test
 
-## Getting Started
+**Deskripsi:** Proyek ini adalah sebuah aplikasi web dashboard menggunakan **NextJs** yang dirancang untuk mengelola daftar produk. Pengguna dapat melakukan berbagai aksi seperti menambah, mengedit, menghapus, dan melihat daftar produk yang tersimpan dalam bentuk tabel.
 
-First, run the development server:
+## Persyaratan Sistem
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Sebelum menjalankan proyek ini, pastikan sistem Anda memenuhi persyaratan berikut:
+
+-   **Node.js**: Versi 16.x atau lebih baru
+-   **npm**: Versi 8.x atau lebih baru (secara default terinstal bersama Node.js)
+-   **Git**: Untuk mengunduh repository proyek dari GitHub
+-   (Opsional) **Yarn**: Versi 1.x atau lebih baru, jika Anda lebih suka menggunakan Yarn sebagai pengelola dependensi
+
+## Langkah-Langkah Instalasi
+
+1.  **Clone repository** ke mesin lokal Anda:
+    
+    ```bash
+    https://github.com/uchel09/dashboard-development-test.git
+    
+    ```
+    
+2.  **Pindah ke direktori proyek**:
+    
+    ```bash
+    cd nama-repository
+    
+    ```
+    
+3.  **Installl dependensi** menggunakan npm atau Yarn:
+    
+    ```bash
+    npm install
+    
+    ```
+    
+    _Jika Anda menggunakan Yarn:_
+    
+    ```bash
+    yarn install
+    
+    ```
+    
+
+## Menjalankan Proyek di Lingkungan Lokal
+
+1.  Jalankan server pengembangan:
+    
+    ```bash
+    npm run dev
+    
+    ```
+    
+    _Jika Anda menggunakan Yarn:_
+    
+    ```bash
+    yarn dev
+    
+    ```
+    
+2.  Buka aplikasi di browser dengan mengakses:
+    
+    ```
+    http://localhost:3000
+    
+    ```
+    
+
+## Perintah Tambahan
+
+-   **Membuat build untuk produksi**:
+    
+    ```bash
+    npm run build
+    
+    ```
+    
+    _Jika menggunakan Yarn:_
+    
+    ```bash
+    yarn build
+    
+    ```
+    
+-   **Menjalankan server produksi**:
+    
+    ```bash
+    npm start
+    
+    ```
+    
+    _Jika menggunakan Yarn:_
+    
+    ```bash
+    yarn start
+    
+    ```
+    
+
+## Struktur Direktori Proyek
+
+Struktur direktori utama proyek adalah sebagai berikut:
+
+```
+/src
+  /components        # Komponen antarmuka pengguna
+  /pages             # Halaman aplikasi (Next.js routing)
+	  /(dashboard)   # Grup Halaman sekaligus halaman home(no feature)
+		  /product   # Halaman Utama (Manage daftar produk)
+		  /settings  # Halaman tambahan untuk setting (no feature)
+
+  /services      # Logika bisnis dan komunikasi API
+  /types         # Tipe TypeScript untuk data aplikasi
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## API Endpoint yang Digunakan
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Berikut adalah daftar endpoint yang digunakan dalam aplikasi ini:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+-   **GET /commerce**: Mengambil daftar semua produk
+	response
+	```json
+	[
+	  {
+		category: "category 5",
+		createdAt: "2025-01-20T05:32:20.404Z",
+		description: "Carbonite web goalkeeper gloves are ergonomically designed to give ",
+		id: "5",
+		image: "https://loremflickr.com/640/480/fashion",
+		price: 400,
+		title: "Carbonite web"
+	  }
+	]
+	```
+-   **POST /commerce**: Menambahkan produk baru
+	- request body
+	```json
+	  {
+		title: "Carbonite web" (required)
+		category: "category 5",(required)
+		description: "Carbonite web goalkeeper gloves are ergonomically designed ````to give ",
+		image: "https://loremflickr.com/640/480/fashion",
+		price: 400,
+	  }
+	  ```
+	  - response
+	  ```json 
+	  {
+		id:"18"
+		title: "Carbonite web" 
+		category: "category 5",
+		description: "Carbonite web goalkeeper gloves are ergonomically designed ````to give ",
+		image: "https://loremflickr.com/640/480/fashion",
+		price: 400,
+	  }
+	  ```
 
-## Learn More
+- **PUT /commerce/:id**: Memperbarui data produk berdasarkan ID
+ - **/commerece/18**  
+  - request body
+ 	```json
+	  {
+		title: "Carbonite web" (required)
+		category: "category 5",(required)
+		description: "Carbonite web goalkeeper gloves are ergonomically designed ````to give ",
+		image: "https://loremflickr.com/640/480/fashion",
+		price: 400,
+	  }
+	  ```
+  -   response
+	  ```json 
+	  {
+		id:"18"
+		title: "Carbonite web" 
+		category: "category 5",
+		description: "Carbonite web goalkeeper gloves are ergonomically designed ````to give ",
+		image: "https://loremflickr.com/640/480/fashion",
+		price: 400,
+	  }
+      ```
+-   **DELETE /commerce/:id**: Menghapus produk berdasarkan ID
+  - **/commerece/18**  
+  - response 
+	  ```json 
+	  {
+		id:"18"
+		title: "Carbonite web" 
+		category: "category 5",
+		description: "Carbonite web goalkeeper gloves are ergonomically designed ````to give ",
+		image: "https://loremflickr.com/640/480/fashion",
+		price: 400,
+	  }
+      ```
 
-To learn more about Next.js, take a look at the following resources:
+## Fitur Utama
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  **Menampilkan daftar produk** dengan informasi lengkap.
+2.  **Menambahkan produk baru** dengan formulir input.
+3.  **Mengedit produk** yang sudah ada.
+4.  **Menghapus produk**  dari daftar Product.
+5.  **Pagination** untuk 9 data product per Page.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Additional Features Implemented
+1.  **Search by  title** Mencari product berdasarkan title.
+2.  **Caching** Caching data product untuk meningkatkan performance
+3. **QueryParams** agar tidak merefresh page table saat refresh window
+4. **Modal Delete** konfirmasi untuk delete product
 
-## Deploy on Vercel
+## Kontributor
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-   **Nama**: Russel Emilian Rumbino
+-   **Profil GitHub**: [https://github.com/uchel09](https://github.com/uchel09)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Lisensi
+
+Proyek ini dilisensikan di bawah lisensi **MIT**. Lihat file `LICENSE` untuk informasi lebih lanjut.
+
+  
